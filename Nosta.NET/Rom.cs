@@ -42,7 +42,7 @@ namespace Nosta.NET
 
         public Architecture GetArchitecture()
         {
-            FileInfo fileInfo = null;
+            FileInfo? fileInfo = null;
             int size64 = (4 * 1024 * 1024);
 
             if (this.exists == true)
@@ -63,11 +63,11 @@ namespace Nosta.NET
         {
             List<long> opcodes = new List<long>();
             int bytesRead = 0;
-            byte[] buffer = null;
+            byte[]? buffer = null;
 
             if (this.exists == true && this.architecture != Architecture.unknown)
             {
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                using (FileStream fileStream = new FileStream(this.path, FileMode.Open, FileAccess.Read))
                 {
                     buffer = new byte[this.padding];
 
