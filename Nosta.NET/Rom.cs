@@ -61,7 +61,7 @@ namespace Nosta.NET
 
         public List<long> GetOpcodes()
         {
-            List<long> opcodes = new List<long>();
+            List<long> data = new List<long>();
             int bytesRead = 0;
             byte[]? buffer = null;
 
@@ -73,14 +73,14 @@ namespace Nosta.NET
 
                     while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        opcodes.Add(
+                        data.Add(
                             BitConverter.ToInt64(buffer, 0)
                         );
                     }
                 }
             }
 
-            return (opcodes);
+            return (data);
         }
     }
 }
