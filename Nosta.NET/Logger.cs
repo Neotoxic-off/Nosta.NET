@@ -26,7 +26,7 @@ namespace Nosta.NET
             };
         }
 
-        public void Log(Types log_type, string message)
+        public void Log(Types log_type, object message)
         {
             Console.WriteLine($"[ {text[log_type]} ] {message}");
         }

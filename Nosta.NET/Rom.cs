@@ -1,9 +1,10 @@
 using System;
 using System.IO;
+using System.Runtime.Intrinsics.Arm;
 
 namespace Nosta.NET
 {
-    public class Rom
+    public class Rom : Logged
     {
         public enum Architecture
         {
@@ -47,15 +48,18 @@ namespace Nosta.NET
 
             if (this.exists == true)
             {
+                Log(Logger.Types.Information, $"checking rom architecture");
                 fileInfo = new FileInfo(this.path);
                 if (fileInfo.Length > size64)
                 {
+                    Log(Logger.Types.Success, $"architecture: x64");
                     return (Architecture.x64);
                 }
 
+                Log(Logger.Types.Success, $"architecture: x86");
                 return (Architecture.x86);
             }
-
+            Log(Logger.Types.Error, $"architecture: unknown");
             return (Architecture.unknown);
         }
 
@@ -67,6 +71,7 @@ namespace Nosta.NET
 
             if (this.exists == true && this.architecture != Architecture.unknown)
             {
+                Log(Logger.Types.Information, $"loading opcodes");
                 using (FileStream fileStream = new FileStream(this.path, FileMode.Open, FileAccess.Read))
                 {
                     buffer = new byte[this.padding];
@@ -78,6 +83,8 @@ namespace Nosta.NET
                         );
                     }
                 }
+
+                Log(Logger.Types.Success, $"loaded {data.Count} opcodes");
             }
 
             return (data);

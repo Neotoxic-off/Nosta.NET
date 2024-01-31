@@ -1,6 +1,6 @@
 namespace Nosta.NET
 {
-    public class Factory
+    public class Factory : Logged
     {
         public Dictionary<long, Opcode> opcodes { get; set; }
         public Rom rom { get; set; }
@@ -9,30 +9,18 @@ namespace Nosta.NET
         {
             opcodes = new Dictionary<long, Opcode>();
             rom = new Rom(romPath);
-
-            Prepare();
-        }
-
-        private void Prepare()
-        {
-            foreach (long instruction in rom.opcodes)
-            {
-                Bind(instruction, new Opcode(instruction)
-                {
-                    executable = DullFunction
-                });
-            }
         }
 
         public bool Bind(long instruction, Opcode opcode)
         {          
             if (opcodes.ContainsKey(instruction) == false)
             {
+                Log(Logger.Types.Success, $"{instruction} binded to {opcode}");
                 opcodes[instruction] = opcode;
 
                 return (true);
             }
-
+            Log(Logger.Types.Error, $"{instruction} failed to bind");
             return (false);
         }
 

@@ -5,19 +5,14 @@
         public static void Main(string[] args)
         {
             Nosta.NET.Factory factory = new Factory("rom.gba");
+            int[] data = { 1, 2, 3 };
 
-            Console.WriteLine(factory.rom.exists);
-            Console.WriteLine(factory.rom.architecture);
-            Console.WriteLine(factory.rom.padding);
-
-            factory.rom.opcodes = factory.rom.GetOpcodes();
-            Console.WriteLine(factory.opcodes.Count());
-
-            foreach (var opcode in factory.opcodes)
+            factory.Bind(factory.rom.opcodes[0], new Opcode(factory.rom.opcodes[0])
             {
-                Console.WriteLine(opcode.Key.ToString());
-                Console.WriteLine(opcode.Value.ToString());
-            }
+                executable = factory.DullFunction
+            });
+
+            factory.opcodes[factory.rom.opcodes[0]].executable(data);
         }
     }
 }
