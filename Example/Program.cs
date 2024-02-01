@@ -5,13 +5,18 @@
         public static void Main(string[] args)
         {
             Nosta.NET.Factory factory = new Factory("rom.gba");
-            int[] data = { 1, 2, 3 };
+            Nosta.NET.Cpu cpu = new NET.Cpu();
 
-            foreach (var op in factory.rom.opcodes) {
+            object[] data = { cpu.PC, cpu.RA, cpu.RAF };
+
+            foreach (var op in factory.rom.opcodes)
+            {
                 factory.Bind(op, factory.DullFunction);
             }
 
-            Console.WriteLine($"{factory.opcodes.Count}");
+            factory.opcodes[factory.rom.opcodes[0]].executable(data);
+
+            factory.Log(Logger.Types.Information, $"opcode loaded {factory.opcodes.Count}");
         }
     }
 }

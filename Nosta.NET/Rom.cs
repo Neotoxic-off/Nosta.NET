@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Runtime.Intrinsics.Arm;
 
 namespace Nosta.NET
 {
@@ -67,9 +66,9 @@ namespace Nosta.NET
 
         public List<byte> GetOpcodes()
         {
-            List<byte> data = new List<byte>();
             int bytesRead = 0;
             byte[]? buffer = null;
+            List<byte> data = new List<byte>();
 
             if (this.exists == true && this.architecture != Architecture.unknown)
             {

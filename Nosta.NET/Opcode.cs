@@ -4,7 +4,7 @@ namespace Nosta.NET
     {
         public byte instruction { get; set; }
         public string value { get; set; }
-        public Action<int[]> executable { get; set; }
+        public Action<object[]> executable { get; set; }
 
         public Opcode(byte instruction)
         {
@@ -12,7 +12,7 @@ namespace Nosta.NET
             this.value = string.Format("{0:X}", instruction);
         }
 
-        public void Link(Action<int[]> executable)
+        public void Link(Action<object[]> executable)
         {
             this.executable = executable;
         }

@@ -11,7 +11,7 @@ namespace Nosta.NET
             rom = new Rom(romPath);
         }
 
-        public bool Bind(byte instruction, Action<int[]> action)
+        public bool Bind(byte instruction, Action<object[]> action)
         {
             if (opcodes.ContainsKey(instruction) == false)
             {
@@ -19,14 +19,13 @@ namespace Nosta.NET
                     executable = action
                 };
 
-                Log(Logger.Types.Success, $"{instruction} binded to {action}");
-
                 return (true);
             }
+
             return (false);
         }
 
-        public void DullFunction(int[] args)
+        public void DullFunction(object[] args)
         {
             Log(Logger.Types.Information, $"DullFunction called with {args.Count()} args");
         }
