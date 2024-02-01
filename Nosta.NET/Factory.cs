@@ -2,31 +2,33 @@ namespace Nosta.NET
 {
     public class Factory : Logged
     {
-        public Dictionary<long, Opcode> opcodes { get; set; }
+        public Dictionary<byte, Opcode> opcodes { get; set; }
         public Rom rom { get; set; }
 
         public Factory(string romPath)
         {
-            opcodes = new Dictionary<long, Opcode>();
+            opcodes = new Dictionary<byte, Opcode>();
             rom = new Rom(romPath);
         }
 
-        public bool Bind(long instruction, Opcode opcode)
-        {          
+        public bool Bind(byte instruction, Action<int[]> action)
+        {
             if (opcodes.ContainsKey(instruction) == false)
             {
-                Log(Logger.Types.Success, $"{instruction} binded to {opcode}");
-                opcodes[instruction] = opcode;
+                opcodes[instruction] = new Opcode(instruction) {
+                    executable = action
+                };
+
+                Log(Logger.Types.Success, $"{instruction} binded to {action}");
 
                 return (true);
             }
-            Log(Logger.Types.Error, $"{instruction} failed to bind");
             return (false);
         }
 
         public void DullFunction(int[] args)
         {
-            Console.WriteLine($"DullFunction called with {args.Count()} args");
+            Log(Logger.Types.Information, $"DullFunction called with {args.Count()} args");
         }
     }
 }

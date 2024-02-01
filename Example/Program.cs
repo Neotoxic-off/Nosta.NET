@@ -7,12 +7,11 @@
             Nosta.NET.Factory factory = new Factory("rom.gba");
             int[] data = { 1, 2, 3 };
 
-            factory.Bind(factory.rom.opcodes[0], new Opcode(factory.rom.opcodes[0])
-            {
-                executable = factory.DullFunction
-            });
+            foreach (var op in factory.rom.opcodes) {
+                factory.Bind(op, factory.DullFunction);
+            }
 
-            factory.opcodes[factory.rom.opcodes[0]].executable(data);
+            Console.WriteLine($"{factory.opcodes.Count}");
         }
     }
 }
