@@ -71,7 +71,7 @@ namespace Nosta.NET
             int bytesRead = 0;
             byte[]? buffer = null;
 
-            if (this.exists == true)
+            if (this.exists == true && this.architecture != Architecture.unknown)
             {
                 Log(Logger.Types.Information, $"loading opcodes");
                 using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read))
