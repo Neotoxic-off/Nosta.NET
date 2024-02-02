@@ -28,6 +28,11 @@ namespace Nosta.NET
         public void DullFunction(object[] args)
         {
             Log(Logger.Types.Information, $"DullFunction called with {args.Count()} args");
+
+            foreach (object o in args)
+            {
+                Log(Logger.Types.Information, $"{o}");
+            }
         }
     }
 }
